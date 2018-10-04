@@ -19,36 +19,36 @@
     dest: /etc/logrotate.d/nginx_rsyslog
 
 - name: Replace in zabbix_agent.conf ServerActive
-  lineinfile:
+  replace:
     path: /etc/zabbix/zabbix_agentd.conf
     regexp: '^ServerActive='
-    line: 'ServerActive=monitoring.it-oblako.ru:30051'
+    replace: 'ServerActive=monitoring.it-oblako.ru:30051'
   notify: restart zabbix-agent
 
 
 - name: Replace in zabbix_agent.conf MaxLinesPerSecond
-  lineinfile:
+  replace:
     path: /etc/zabbix/zabbix_agentd.conf
     regexp: '^( *)MaxLinesPerSecond='
-    line: 'MaxLinesPerSecond=1000'
+    replace: 'MaxLinesPerSecond=1000'
   register: zabbix_maxlines
   notify: restart zabbix-agent
 
 
 - name: Replace in zabbix_agent.conf MaxLinesPerSecond
-  lineinfile:
+  replace:
     path: /etc/zabbix/zabbix_agentd.conf
     regexp: '^#( *)MaxLinesPerSecond='
-    line: 'MaxLinesPerSecond=1000'
+    replace: 'MaxLinesPerSecond=1000'
   when: zabbix_maxlines.changed == false
   notify: restart zabbix-agent
 
 
 - name: Replace in /etc/logrotate.d/nginx create 640 nginx adm
-  lineinfile:
+  replace:
     path: /etc/logrotate.d/nginx
     regexp: '^( *)create 640 nginx adm'
-    line: 'create 644 nginx adm'
+    replace: 'create 644 nginx adm'
 
 # - lineinfile:
 #     path: /etc/nginx/nginx.conf

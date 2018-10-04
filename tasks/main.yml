@@ -47,7 +47,7 @@
 - name: Replace in /etc/logrotate.d/nginx create 640 nginx adm
   replace:
     path: /etc/logrotate.d/nginx
-    regexp: '^(.*)create 640 nginx adm$'
+    regexp: '^(.*)create ?640 (\S*) adm$'
     replace: '\tcreate 644 nginx adm'
 
 # - lineinfile:

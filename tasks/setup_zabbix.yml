@@ -1,7 +1,7 @@
 ---
 - name: Install a .deb package zabbix-release_3.4 from the internet.
   apt:
-    deb: https://repo.zabbix.com/zabbix/3.4/{{ ansible_distribution }}/pool/main/z/zabbix-release/zabbix-release_3.4-1+{{ ansible_distribution_release }}_all.deb
+    deb: https://repo.zabbix.com/zabbix/3.4/{{ ansible_distribution | lower }}/pool/main/z/zabbix-release/zabbix-release_3.4-1+{{ ansible_distribution_release }}_all.deb
 
 - name: Update apt cache.
   apt: update_cache=yes cache_valid_time=600
@@ -9,6 +9,6 @@
 - name: Install zabbix-agent package(s)
   apt:
     pkg: zabbix-agent
-    state: lates
+    state: latest
     force: yes
     install_recommends: yes

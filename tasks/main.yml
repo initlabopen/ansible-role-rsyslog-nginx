@@ -23,7 +23,8 @@
     path: /etc/zabbix/zabbix_agentd.conf
     regexp: '^ServerActive='
     line: 'ServerActive=monitoring.it-oblako.ru:30051'
-  notify: restart zabbix
+  notify: restart zabbix-agent
+
 
 - name: Replace in zabbix_agent.conf MaxLinesPerSecond
   lineinfile:
@@ -31,20 +32,22 @@
     regexp: '^( *)MaxLinesPerSecond='
     line: 'MaxLinesPerSecond=1000'
   register: zabbix_maxlines
-  notify: restart zabbix
+  notify: restart zabbix-agent
+
 
 - name: Replace in zabbix_agent.conf MaxLinesPerSecond
   lineinfile:
     path: /etc/zabbix/zabbix_agentd.conf
-    regexp: '^#MaxLinesPerSecond='
+    regexp: '^#( *)MaxLinesPerSecond='
     line: 'MaxLinesPerSecond=1000'
   when: zabbix_maxlines.changed == false
-  notify: restart zabbix
+  notify: restart zabbix-agent
+
 
 - name: Replace in /etc/logrotate.d/nginx create 640 nginx adm
   lineinfile:
     path: /etc/logrotate.d/nginx
-    regexp: 'create 640 nginx adm'
+    regexp: '^( *)create 640 nginx adm'
     line: 'create 644 nginx adm'
 
 # - lineinfile:

@@ -13,6 +13,14 @@
     dest: /etc/rsyslog.d/nginx.conf
   notify: restart rsyslog
 
+- name: Inser in /etc/rsyslog.conf use module imfile
+  lineinfile:
+    path: /etc/rsyslog.conf
+    insertafter: "^(.*)provides support for local system logging(.*)$"
+    line: 'module(load="imfile" mode="inotify")'
+  notify: restart rsyslog
+
+
 - name: Copy logrotate config for logs from rsyslog
   copy:
     src: ../files/etc/logrotate.d/nginx_rsyslog
@@ -49,6 +57,12 @@
     path: /etc/logrotate.d/nginx
     regexp: '^(.*)create ?640 (\S*) adm$'
     replace: '\tcreate 644 nginx adm'
+
+- name: Inser in /etc/rsyslog.conf use module imfile
+  lineinfile:
+    path: /etc/rsyslog.conf
+    insertafter: "#### MODULES ####\n\r#################"
+    line: 'module(load="imfile" mode="inotify")'
 
 # - lineinfile:
 #     path: /etc/nginx/nginx.conf

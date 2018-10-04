@@ -11,7 +11,8 @@
 - name: Install rsyslog package(s)
   apt:
     pkg: rsyslog
-    state: present
+    state: latest
     force: yes
     install_recommends: yes
+    only_upgrade: yes
     default_release: "{{ansible_distribution_release}}-backports"

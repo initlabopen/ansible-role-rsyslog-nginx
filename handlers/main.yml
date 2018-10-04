@@ -1,0 +1,9 @@
+- name: restart rsyslog
+    systemd:
+      state: restarted
+      name: rsyslog
+
+- name: restart zabbix-agent
+    systemd:
+      state: restarted
+      name: zabbix-agent

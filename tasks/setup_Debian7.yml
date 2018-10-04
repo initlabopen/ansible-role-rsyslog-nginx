@@ -1,0 +1,28 @@
+---
+- name: Add an apt key by id from a keyserver
+  apt_key:
+    keyserver: keys.gnupg.net
+    id: AEF0CF8E
+
+- name: Enable repository (Debian wheezy).
+  apt_repository:
+    repo: 'deb-src http://debian.adiscon.com/v8-stable wheezy/'
+    state: present
+    filename: "{{ ansible_distribution_release }}_backports"
+
+- name: Enable repository (Debian ).
+  apt_repository:
+    repo: 'deb http://debian.adiscon.com/v8-stable wheezy/'
+    state: present
+    filename: "{{ ansible_distribution_release }}_rsyslog"
+
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=600
+
+- name: Install rsyslog package(s)
+  apt:
+    pkg: rsyslog
+    state: present
+    force: yes
+    install_recommends: yes
+    allow_unauthenticated: yes

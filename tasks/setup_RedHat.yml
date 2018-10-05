@@ -1,0 +1,8 @@
+---
+- name: Download rsyslog.repo
+  get_url:
+    url: http://rpms.adiscon.com/v8-stable/rsyslog.repo
+    dest: /etc/yum.repos.d/rsyslog.repo
+
+- name: rsyslog packages are installed.
+  yum: name=rsyslog state=present 

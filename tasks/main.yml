@@ -13,17 +13,34 @@
     dest: /etc/rsyslog.d/nginx.conf
   notify: restart rsyslog
 
-- name: Inser in /etc/rsyslog.conf use module imfile
+- name: Insert in /etc/rsyslog.conf use module imfile
   lineinfile:
     path: /etc/rsyslog.conf
     insertafter: "^(.*)provides support for local system logging(.*)$"
     line: 'module(load="imfile" mode="inotify")'
   notify: restart rsyslog
 
+
+- name: Clean /etc/logrotate.d/nginx_rsyslog
+  file:
+    state: absent
+    path: "/etc/logrotate.d/nginx_rsyslog"
+
+- name: Create dir /etc/logrotate.d/rsyslogd
+  file:
+    path: /etc/logrotate.d/rsyslogd
+    recurse: yes
+    state: directory
+
 - name: Copy logrotate config for logs from rsyslog
   copy:
     src: ../files/etc/logrotate.d/nginx_rsyslog
-    dest: /etc/logrotate.d/nginx_rsyslog
+    dest: /etc/logrotate.d/rsyslogd/nginx_rsyslog
+
+- name: Insert in /etc/logrotate.conf use file nginx_rsyslog
+  lineinfile:
+    path: /etc/logrotate.conf
+    line: 'include /etc/logrotate.d/rsyslogd/nginx_rsyslog'
 
 - name: Replace in zabbix_agent.conf ServerActive
   replace:

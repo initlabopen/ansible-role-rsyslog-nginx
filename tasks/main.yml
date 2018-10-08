@@ -89,6 +89,14 @@
     regexp: '^(.*)create ?640 (\S*) adm$'
     replace: '\tcreate 644 nginx adm'
 
+
+- name: Replace in rsyslog.conf WorkDirectory
+  replace:
+    path: /etc/rsyslog.conf
+    regexp: '^#( *)$WorkDirectory(.*)'
+    replace: '$WorkDirectory\2'
+  notify: restart rsyslog
+
 # - lineinfile:
 #     path: /etc/nginx/nginx.conf
 #     regexp: 'log_format main(.*);$'

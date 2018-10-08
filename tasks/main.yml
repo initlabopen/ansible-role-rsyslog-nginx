@@ -93,7 +93,7 @@
 - name: Replace in rsyslog.conf WorkDirectory
   replace:
     path: /etc/rsyslog.conf
-    regexp: '^#( *)$WorkDirectory(.*)'
+    regexp: '^#( *)$WorkDirectory(.*)$'
     replace: '$WorkDirectory\2'
   notify: restart rsyslog
 

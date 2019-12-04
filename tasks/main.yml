@@ -17,14 +17,14 @@
 - name: Copy rsyslog config for nginx
   copy:
     src: ../files/etc/rsyslog.d/nginx_Centos.conf
-    dest: /etc/rsyslog.d/nginx.conf
+    dest: /etc/rsyslog.d/000-nginx.conf
   notify: restart rsyslog
   when: ansible_distribution == "CentOS"
 
 - name: Copy rsyslog config for nginx
   copy:
     src: ../files/etc/rsyslog.d/nginx_Debian.conf
-    dest: /etc/rsyslog.d/nginx.conf
+    dest: /etc/rsyslog.d/000-nginx.conf
   notify: restart rsyslog
   when: ansible_distribution == "Debian"
 
